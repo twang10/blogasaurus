@@ -1,0 +1,30 @@
+
+body {
+  background: url('https://images.unsplash.com/photo-1504999258221-4bf2fe4dd356?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4a30c348444adaa74f397e88fb9f851d&auto=format&fit=crop&w=1510&q=80');
+  background-size: cover;
+}
+
+h1 {
+  font-family: 'Helvetica';
+  font-style: italic;
+  font-size: 100px;
+  background-color: red;
+  color: white;
+  display: inline;
+}
+
+section {
+  text-align: center;
+  padding: 10%;
+  /* PapayaWhip */
+  background-color: #ffefd5;
+}
+
+.subscribe {
+  padding: 10px 20px;
+  background: red;
+  border: none;
+  color: white;
+  text-transform: uppercase;
+  font-size: 14px;
+}
