@@ -34,7 +34,27 @@ class AboutMeHandler(webapp2.RequestHandler):
         template = jinja_current_dir.get_template('about_me.html')
         self.response.write(template.render())
 
+class PostHandler(webapp2.RequestHandler):
+    # GET Request Handler
+    def get(self):
+        # Store 'new_post.html' template in variable.
+        template = jinja_current_dir.get_template('new_post.html')
+        # Render template and write it to GET response.
+        self.response.write(template.render())
+    # POST Request Handler
+    def post(self):
+        # Save data from form.
+        tweet = self.request.get('tweet')
+        print(tweet)
+        # Put data into dictionary for Jinja.
+        template_vars = { "tweet" : tweet }
+        # Store 'view_post.html' template in variable.
+        template = jinja_current_dir.get_template('view_post.html')
+        # Render template with dictionary data, write to POST response.
+        self.response.write(template.render(template_vars))
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/aboutme', AboutMeHandler)
+    ('/aboutme', AboutMeHandler),
+    ('/posts', PostHandler)
 ], debug=True)
