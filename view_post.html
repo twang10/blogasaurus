@@ -8,7 +8,9 @@
   <h1>A tweet</h1>
   <section>
     <div>
-      {{tweet}}
+      <!-- Returns the value of template_vars["tweet"] -->
+      <!-- template_vars = { "tweet" : *input from POST* } -->
+      {{ tweet }}
     </div>
   </section>
   <script src="/static/my_blog.js"></script>
