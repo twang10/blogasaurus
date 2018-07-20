@@ -17,6 +17,8 @@
 import webapp2
 import os
 import jinja2
+from models import Post
+from models import Author
 
 #remember, you can get this by searching for jinja2 google app engine
 jinja_current_dir = jinja2.Environment(
@@ -35,25 +37,39 @@ class AboutMeHandler(webapp2.RequestHandler):
         self.response.write(template.render())
 
 class PostHandler(webapp2.RequestHandler):
-    # GET Request Handler
     def get(self):
-        # Store 'new_post.html' template in variable.
-        template = jinja_current_dir.get_template('new_post.html')
-        # Render template and write it to GET response.
+        template = jinja_current_directory.get_template(
+            'templates/posts.html')
         self.response.write(template.render())
 
-    # POST Request Handler
     def post(self):
-        # Save data from form.
-        tweet = self.request.get('tweet')
+        title_input = self.request.get('title')
+        content_input = self.request.get('content')
+        username_input = self.request.get('username')
 
-        # Put data into dictionary for Jinja.
-        template_vars = { "tweet" : tweet }
+        blog_post = Post(title=title_input, content=content_input)
+        blog_post.put()
 
-        # Store template in variable.
-        template = jinja_current_dir.get_template('view_post.html')
+        check_authors = Author.query(Author.username == username_input).fetch()
+        # check_authors = [Author(username, posts), Author(), Author()]
+        if len(check_authors) > 0:
+            author = check_authors[0]
+            author.posts.append(blog_post.key)
+        else:
+            author = Author(username=username_input, posts=[blog_post.key])
 
-        # Render template with dictionary data, write to POST response.
+        author.put()
+
+        blog_posts = []
+        for blog_post_key in author.posts:
+            blog_posts.append(blog_post_key.get())
+
+        template_vars = {
+            'username': username_input,
+            'blog_posts': blog_posts
+        }
+        template = jinja_current_directory.get_template(
+            'templates/show_many_posts.html')
         self.response.write(template.render(template_vars))
 
 app = webapp2.WSGIApplication([

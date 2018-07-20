@@ -1,0 +1,19 @@
+<html>
+<head>
+  <style>
+    .blog-post {
+      border: 2px solid blue;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Posts by {{username}}</h1>
+  {% for blog_post in blog_posts %}
+    <div class="blog-post">
+      <h2>{{blog_post.title}}</h2>
+      <p>{{blog_post.content}}</p>
+    </div>
+  {% endfor %}
+</body>
+</html>
